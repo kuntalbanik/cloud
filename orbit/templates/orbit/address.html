@@ -1,0 +1,40 @@
+{% extends 'layout2.html' %}
+
+{% block content %}
+
+<div class="row modal-form">
+	<h5>Address</h5>
+	<hr>
+	<div class="col s12 ">
+		<form name="myForm" method="post" autocomplete="off">
+			{% csrf_token %}
+
+			{% for field in form %}
+			<div>
+				<span class="red">{{ field.errors }}</span>
+				{{ field.label_tag }} {{ field }}
+				{% if field.help_text %}
+				<span class="cyan-text lighten-4">{{ field.help_text|safe }}</span>
+				{% endif %}
+
+			</div>
+			{% endfor %}
+	</div>
+
+<div class="right">
+	<a class="waves-effect waves-green green lighten-3 btn-flat" href="/orders/create/">Cancel</a>
+	<button type="submit" class="waves-effect waves-green green lighten-3 btn-flat">Submit</button>
+</div>
+</form>
+</div>
+
+
+
+<script>
+	function goBack() {
+		window.history.back();
+	}
+
+</script>
+
+{% endblock %}

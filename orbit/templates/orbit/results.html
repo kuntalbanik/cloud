@@ -1,0 +1,186 @@
+{% extends 'layout.html' %} {% block content %}
+
+
+<div class="below-nav">
+	<!-- Inner pages start -->
+
+	<div class="row div-style grey lighten-4 center z-depth-2 below-nav-div">
+		<h6>Search Results for '<span class="bold ">{{ data }}</span>'</h6>
+	</div>
+
+	<div class="row below-nav-table">
+		<div class="col hide-on-small-only m3 l2 heading-div left">
+			<ul class="section table-of-contents">
+				<p>Accounts</p>
+				<li><a href="#customer">Accounts</a></li>
+				<p>Contacts</p>
+				<li><a href="#contact">Contacts</a></li>
+				<p>Orders</p>
+				<li><a href="#customerpo">Customer</a></li>
+			</ul>
+		</div>
+	</div>
+
+
+		<!-- Results -->
+		<!-- Accounts -->
+		<div class="row below-nav-table">
+		<div class="col s12 m9 l10 right table-margin">
+			{% if account %}
+			<h5>Accounts</h5>
+			<p class="p-bottom">
+				{% if account.count > 1 %}
+				Total <span class="bold">{{ account.count }} </span> results found
+				{% else %}
+				Total  <span class="bold">{{ account.count }} </span> result found
+				{% endif %}
+			</p>
+			<div id="customer" class="section scrollspy heading-div2">
+				<table class='striped highlight responsive-table table-hover-set'>
+					<thead>
+						<tr>
+							<th>Customer Name</th>
+							<th>Industry</th>
+							<th>UIN</th>
+							<th>Ph No.</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for accounts in account %}
+						<tr>
+							<td><a class="textUnderline" href="{% url 'account_detail' accounts.pk %}"> {{ accounts.name }}</a></td>
+							<td>{{ accounts.industry }}</td>
+							<td>{{ accounts.uin }}</td>
+							<td>{{ accounts.ph_no }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+		<!-- Contacts -->
+		<div class="row below-nav-table">
+		<div class="col s12 m9 l10 right table-margin">
+			{% if contact %}
+			<h5>Contacts</h5>
+			<p class="p-bottom">
+					{% if contact.count > 1 %}
+					Total <span class="bold">{{ contact.count }} </span> results found
+					{% else %}
+					Total <span class="bold">{{ contact.count }} </span> result found
+					{% endif %}
+				</p>
+			<div id="contact" class="section scrollspy heading-div2">
+				<table class='striped highlight responsive-table table-hover-set'>
+					<thead>
+						<tr>
+							<th>Customer Name</th>
+							<th>Contact Name</th>
+							<th>Contact</th>
+							<th>Job Role</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for contacts in contact %}
+						<tr>
+							<td><a class="textUnderline" href="{% url 'account_detail' contacts.account_id %}">{{ contacts.account }}</a></td>
+							<td>{{ contacts.contact_name }}</td>
+							<td>{{ contacts.contact_no }}</td>
+							<td>{{ contacts.job_title }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+				{% else %}
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<!-- Order data -->
+	<div class="row below-nav-table">
+			<div class="col s12 m9 l10 right table-margin">
+				{% if order %}
+				<h5>Orders</h5>
+				<p class="p-bottom">
+					{% if order.count > 1 %}
+					Total <span class="bold">{{ order.count }} </span> results found
+					{% else %}
+					Total <span class="bold">{{ order.count }} </span> result found
+					{% endif %}
+				</p>
+				<div id="customerpo" class="section scrollspy heading-div2">
+					<table class='striped highlight responsive-table table-hover-set'>
+						<thead>
+							<tr>
+								<th>Order No</th>
+								<th>Customer Name</th>
+								<th>Division</th>
+								<th>Date</th>
+								<th>Value</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for orders in order %}
+							<tr>
+								<td><a class="textUnderline" href="{% url 'orders_detail' orders.pk %}">{{ orders.order_no }}</a></td>
+								<td><a class="textUnderline" href="{% url 'account_detail' orders.account_id %}">{{ orders.account }}</a></td>
+								<td>{{ orders.division }}</td>
+								<td>{{ orders.order_date }}</td>
+								<td>{{ orders.amount }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					{% else %}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+<!-- Inner pages end -->
+
+
+
+<script>
+	/* $(document).ready(function() {
+		$.ajax({
+			url : "/orders/create/",
+			success : function(data) {
+				//$('#modal1 .modal-content').html(data);
+				$('#modal1 .modal-content').html(data);
+			},
+			error : function(e) {
+				console.log(e)
+			}
+		});
+	}); */
+
+	function myFunction() {
+
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("id_search");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("data_table");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+{% endblock %}

@@ -1,0 +1,300 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="below-nav">
+	<div class="row">
+
+		<div class="col s12 m1 center">
+			<i class="medium material-icons material-ico indigo-text darken-2">subject</i>
+		</div>
+
+		<div class="col s12 m3 left">
+			<input type="hidden" name="order_id" value="{{ order.id }}">
+			<p class="p-top">Order Number</p>
+			<h6 class="h6-bold truncate">
+				{{ order.order_no }} <i
+					class="small material-icons indigo-text darken-2"
+					style="font-size: 1.8rem; position: absolute; margin-top: -2px;"> 
+					<a class="tooltipped" data-position="top" data-tooltip="Edit Order" class="" href="{% url 'orders_update' order.pk %}">edit</a></i>
+			</h6>
+			<p class="p-bottom">
+				<a class="textUnderline" href="{% url 'orders_list' %}">Return to Orders list</a>
+			</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m3 offset-m1">
+			<p class="p-top2">Account Name</p>
+			<p class="bold "><a class="textUnderline" href="{% url 'account_detail' order.account_id %}">{{ order.account }}</p></a>
+			<p class="p-bottom"></p>
+		</div>
+		<div class="col s12 m2 left">
+			<p class="p-top2">Division</p>
+			<p class="bold">{{ order.division }}</p>
+			<p class="p-bottom"></p>
+		</div>
+		<div class="col s12 m2 left">
+			<p class="p-top2">Order Date</p>
+			<p class="bold">{{ order.order_date }}</p>
+			<p class="p-bottom"></p>
+		</div>
+		<div class="col s12 m2 left">
+			<p class="p-top2">Amount</p>
+			<p class="bold">{{ order.amount }}</p>
+			<p class="p-bottom"></p>
+		</div>
+		<div class="col s12 m1 left">
+			<p class="p-top2">UID</p>
+			<p class="bold" id="uid"></p>
+			<p class="p-bottom"></p>
+		</div>
+		<div class="col s12 m1 left">
+				<p class="p-top2">Status</p>
+				<p class="bold" >{{ order.order_status }}</p>
+				<p class="p-bottom"></p>
+		</div>
+
+		<!-- <div class="col s12 m2 top-bottom center-align">
+			Modal Trigger
+			
+			edit
+		</div>
+	</div> -->
+
+		<div class="row"></div>
+		<div class="row">
+			<div class="col s12 m6 offset-m1">
+				<p class="bold">Order Details</p>
+				<hr>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input companyname" disabled
+						value="{{ order.order_account }}" id="disabled" type="text"> <label
+						class="custom-label">Order on account</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.account }}" id="disabled" type="text"> <label
+						class="custom-label">Account name</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.contact.contact_name }}, {{ order.contact.contact_no }}, {{ order.contact.email }} ({{ order.contact.job_title }})" id="disabled" type="text"> <label
+						class="custom-label">Contact</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.billing_address.address }}, {{ order.billing_address.city }}, {{ order.billing_address.dist }}, {{ order.billing_address.state }}, {{ order.billing_address.pin }}" id="disabled" type="text">
+					<label class="custom-label">Billing Address</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.shipping_address.address }}, {{ order.shipping_address.city }}, {{ order.shipping_address.dist }}, {{ order.shipping_address.state }}, {{ order.shipping_address.pin }}" id="disabled" type="text">
+					<label class="custom-label">Shipping Address</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.order_type }}" id="disabled" type="text">
+					<label class="custom-label">Order Type</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.category }}" id="disabled" type="text"> <label
+						class="custom-label">Category</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.product_description }}" id="disabled" type="text">
+					<label class="custom-label">Product Description</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled value="{{ order.uom }}"
+						id="disabled" type="text"> <label class="custom-label">Unit
+						Of Measurement</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled value="{{ order.qty }}"
+						id="disabled" type="text"> <label class="custom-label">Quantity</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled value="{{ order.tax }}"
+						id="disabled" type="text"> <label class="custom-label">Tax</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.order_booking_status }}" id="disabled" type="text">
+					<label class="custom-label">Order Booking Status</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.so_no }}" id="disabled" type="text"> <label
+						class="custom-label">Sales Order Number (SO Number from
+						Principal Company)</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.payment_terms }}" id="disabled" type="text">
+					<label class="custom-label">Payment Terms</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.advance_amount }}" id="disabled" type="text">
+					<label class="custom-label">Advance Amount</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.advance_status }}" id="disabled" type="text">
+					<label class="custom-label">Advance Payment Status</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.balance_amount }}" id="disabled" type="text">
+					<label class="custom-label">Balance Amount</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.balance_status }}" id="disabled" type="text">
+					<label class="custom-label">Balance Payment Status</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.delivery_date }}" id="disabled" type="text">
+					<label class="custom-label">Delivery Date</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.supervision_scope }}" id="disabled" type="text">
+					<label class="custom-label">E&amp;C and Supervision Scope</label>
+				</div>
+
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.freight_terms }}" id="disabled" type="text">
+					<label class="custom-label">Freight Terms</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.transporter }}" id="disabled" type="text">
+					<label class="custom-label">Transporter Name</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.local_purchase_required }}" id="disabled" type="text">
+					<label class="custom-label">Local Purchase Required</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.local_purchase_required_date }}" id="disabled" type="text">
+					<label class="custom-label">Local Purchase Date (Req.)</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.di_status }}" id="disabled" type="text">
+					<label class="custom-label">Dispatch Instruction Status</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.di_date }}" id="disabled" type="text">
+					<label class="custom-label">Dispatch Instruction Date</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.delivery_status }}" id="disabled" type="text">
+					<label class="custom-label">Delivery Status</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.commissioning_status }}" id="disabled" type="text">
+					<label class="custom-label">Commissioning Status</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.commissioning_amount }}" id="disabled" type="text">
+					<label class="custom-label">Commissioning Amount</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.commission_status }}" id="disabled" type="text">
+					<label class="custom-label">Commission Status</label>
+				</div>
+				<div class="input-field col s12 m6">
+					<input class="order-detail-input" disabled
+						value="{{ order.commission_amount }}" id="disabled" type="text">
+					<label class="custom-label">Commission Amount</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.sales_person }}" id="disabled" type="text"> <label
+						class="custom-label">Sales Person</label>
+				</div>
+				<div class="input-field col s12 m12">
+					<input class="order-detail-input" disabled
+						value="{{ order.remarks }}" id="disabled" type="text"> <label
+						class="custom-label">Remarks</label>
+				</div>
+			</div>
+			<div class="col s12 m4">
+				<p class="bold">Order Related Details</p>
+				<hr>
+				<div>
+				
+				<p class="account-rel-details "><span class="textUnderline2">Attachments</span> &nbsp;
+				<i class="small material-icons indigo-text darken-2" style="font-size: 1.6rem; position: absolute; margin-top: -1px;">
+			
+				<a class="tooltipped" data-position="top" data-tooltip="Add Attachments" href="{% url 'orderfiles_create' %}?oid={{ order.id }}">add_circle_outline</a></i>
+				</p>
+				{% for dict_item in orderFile %} 
+					{% for key, value in dict_item.items %}
+						{% if key == 'id' %}
+							<i class="small material-icons indigo-text darken-2" style="font-size: 1.3rem; position: absolute; margin-top: -1px;">
+									<a class="tooltipped" data-position="top" data-tooltip="Edit Attachments" href="/ordersfile/update/{{ value }}/?oid={{ order.id }}">edit</a></i>
+						{% endif %}
+						<span class="account-rel-details-data">
+						{% if 'title' in key %}
+							&nbsp; &nbsp;  &nbsp;
+									{% if value == 1 %}
+										Purchase Order
+									{% elif value == 2 %}
+										Cost Sheet
+									{% elif value == 3 %}
+										Final Quotation
+									{% elif value == 4 %}
+										PI Advance Payment
+									{% elif value == 5 %}
+										PI Balance Payment
+									{% elif value == 6 %}
+										Vendor PO
+									{% elif value == 7 %}
+										Principal PO
+									{% elif value == 8 %}
+										GST Invoice
+									{% elif value == 9 %}
+										Packing Slip
+									{% elif value == 10 %}
+										FOC
+									{% elif value == 12 %}
+										Others
+									{% endif %}
+						</span>
+							{% elif 'file' in key %}
+								<a target="_blank" href="/uploads/{{value}}">
+								<i style="font-size: 1.3rem; position: absolute; margin-top: 2px;" class="small material-icons tooltipped" data-position="top" data-tooltip="Open File" >open_in_new</i></a>
+									<br>
+						{% endif %}
+					{% endfor %} 
+				{% endfor %}
+				</div>
+				<div>
+					<p class="account-rel-details"><span class="textUnderline2">Other Details</span></p>
+					
+				</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<script>
+		var uid = 1000 + {{ order.pk }};
+		document.getElementById("uid").innerHTML = uid;
+	</script>
+
+{% endblock %}

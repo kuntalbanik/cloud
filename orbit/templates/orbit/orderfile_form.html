@@ -1,0 +1,83 @@
+{% extends 'layout2.html' %}
+
+{% block content %}
+
+<div class="row modal-form2">
+        <h5>Attachment</h5>
+                    <hr>
+    <div class="col s12">
+
+		<form method="post" autocomplete="off" class="post-form" enctype="multipart/form-data">                    
+					{% csrf_token %}
+					<div>
+					{{ form.order.label_tag }}
+					{{ form.order }}
+					</div>
+					{{ form.order_id }}
+					<div>
+					{{ form.title.label_tag }}
+					{{ form.title }}
+					</div>
+					<div>
+					{{ form.file.label_tag }}
+					{{ form.file }}
+					<br>
+					<span class="order-help-text">Supported file types : [ .pdf / .doc / .docx / .jpg / .jpeg / .xlsx / .xls ]</span>
+					</div>
+					{{ form.file.errors }}
+				<div class="right">
+							<a class="waves-effect waves-green green lighten-3 btn-flat" onclick="goHome();">Cancel</a>
+							<button type="submit" class="waves-effect waves-green green lighten-3 btn-flat">Submit</button>
+				</div>
+		</form>
+	</div>
+</div>
+
+	<script>
+		const queryString = window.location.search;
+		var reg = /[0-9]/g;
+		var id = queryString.match(reg).join("");
+		
+		function goHome() {
+			window.open('/orders/'+id, '_self');
+		}
+
+		// alert("hello");
+		// alert(queryString);
+		// alert(id);
+	</script>
+	
+
+	{% load staticfiles %}
+	<script src="{% static 'orbit/js/jquery-3.3.1.min.js' %}"></script>
+	<script>
+		//$("#edit_author").click(function(){
+		$(document).ready(function () {
+			//$( ".select-dropdown" ).attr('disabled', true);
+			$( "#id_order option" ).map(function( i ) {
+				// console.log( i + ": " + $( this ).val() );
+				if($( this ).val() == id){
+					//$( this ).attr('selected', $( this ).val());
+					//$( this ).val($( this ).text());
+					$( this ).attr('selected', "selected");
+					
+				}
+			});
+		});
+	</script>
+	<script>
+		// window.onload = function() {
+		// 	setTimeout(function(){ 
+		// 		var x = document.getElementsByClassName("select-dropdown dropdown-trigger")[0];
+		// 		//alert(x);
+		// 		x.disabled=true;
+		// 	 }, 300);
+		// };
+		window.onload = function() {
+			setTimeout(function(){ 
+				$("#id_order_chosen").addClass("disabledbutton");
+			}, 300);
+		};
+		
+    </script>
+{% endblock %}

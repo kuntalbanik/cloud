@@ -1,0 +1,118 @@
+{% extends 'layout.html' %} {% block content %}
+
+
+<div class="below-nav">
+	<div class="row">
+
+		<div class="col s12 m1 center">
+			<i class="medium material-icons material-ico indigo-text darken-2">reorder</i>
+		</div>
+
+		<div class="col s12 m3 left">
+			<p class="p-top">Customer Purchase Order</p>
+			<h6 class="h6-bold truncate">Currently Available &nbsp;
+			<i class="small material-icons indigo-text darken-2" style="font-size: 2rem; position: absolute; margin-top: -4px;">
+			
+			<a class="tooltipped" data-position="top" data-tooltip="Add Purchase Order" href="{% url 'order_create' %}">add_circle_outline</a></i>
+			
+			</h6>
+			<p class="p-bottom">
+				Total <span class="bold">{{ object_list.count }} </span> - Updated few moments ago
+			</p>
+		</div>
+
+		<div class="col s12 m6 offset-m1">
+			<div class="input-field">
+				<i class="material-icons prefix blue-text">search</i> <input
+					id="id_search" onkeyup="myFunction()" type="text"
+					autocomplete="off" placeholder="Search by Customer Name.." required>
+			</div>
+		</div>
+		
+
+	</div>
+
+
+
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal">
+		<div class="modal-content"></div>
+		
+
+	</div>
+	<!--  Modal Structure End -->
+
+
+	<div class="row table-margin">
+		<div class="col s12 m12">
+			{% if object_list %}
+				<table class='striped highlight responsive-table table-hover-set'
+					id="data_table">
+					<thead>
+						<tr>
+							<th>Order No</th>
+							<th>Account<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+							<th>Customer Name</th>
+							<th>Division<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+							<th>Status<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+							<th>Date<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+							<th>Value<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						</tr>
+					</thead>
+
+					<tbody>
+						{% for order in object_list reversed %}
+						<tr id="accounts">
+							<td><a class="textUnderline" href="{% url 'orders_detail' order.pk %}"> {{ order.order_no }}</a></td>
+							<td class="companynameTD">{{ order.order_account }}</td>
+							<td>{{ order.account }}</td>
+							<td>{{ order.division }}</td>
+							<td>{{ order.order_status }}</td>
+							<td>{{ order.order_date }}</td>
+							<td>{{ order.amount }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			{% else %}
+				<br><p class="center-align">No Records Found or you might not have permissions to access orders.</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+<script>
+	/* $(document).ready(function() {
+		$.ajax({
+			url : "/orders/create/",
+			success : function(data) {
+				//$('#modal1 .modal-content').html(data);
+				$('#modal1 .modal-content').html(data);
+			},
+			error : function(e) {
+				console.log(e)
+			}
+		});
+	}); */
+	
+	function myFunction() {
+
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("id_search");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("data_table");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[2];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+{% endblock %}

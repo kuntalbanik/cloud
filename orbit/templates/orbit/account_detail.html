@@ -1,0 +1,206 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="below-nav">
+	<div class="row">
+
+		<div class="col s12 m1 center">
+			<i class="medium material-icons material-ico indigo-text darken-2">person</i>
+		</div>
+
+		<div class="col s12 m3 left">
+			<input type="hidden" name="order_id" value="{{ account.id }}">
+			<p class="p-top">Account</p>
+			<h6 class="h6-bold truncate">
+				{{ account.name }}
+			</h6>
+			<p class="p-bottom">
+				<a class="textUnderline" href="{% url 'account_list' %}">Return to Accounts list</a>
+			</p>
+		</div>
+	</div>
+
+
+	<div class="row">
+		<div class="col s12 m5 offset-m1">
+			<p class="bold">Account Details</p>
+			<hr>
+			<div class="input-field col s12 m12">
+				<input class="order-detail-input" disabled value="{{ account.name }}" id="disabled" type="text"> <label
+					class="custom-label">Account name</label>
+			</div>
+			<div class="input-field col s12 m12">
+				<input class="order-detail-input" disabled value="{{ account.industry }}" id="disabled" type="text">
+				<label class="custom-label">Industry</label>
+			</div>
+			<div class="input-field col s12 m12">
+				<input class="order-detail-input" disabled value="{{ account.pan }}" id="disabled" type="text"> <label
+					class="custom-label">PAN Number</label>
+			</div>
+			<div class="input-field col s12 m12">
+				<input class="order-detail-input" disabled value="{{ account.ph_no }}" id="disabled" type="text"> <label
+					class="custom-label">Ph No</label>
+			</div>
+		</div>
+
+
+
+
+
+
+		<div class="col s12 m5">
+			<p class="bold">Account Related Details</p>
+			<hr>
+			<div>
+				<p class="account-rel-details">Contacts</p>
+				<ul class="collapsible collapsible-accordion noshadow">
+					{% for contact in contacts %}
+					
+						<li>
+							<div class="collapsible-header account-rel-details-data tabindex="0"><i
+									style="margin: auto; margin-left: 2px; margin-right: 3px;"
+									class="material-icons">keyboard_arrow_down</i>
+								<span><i class="material-icons tiny material-icons2">person</i> &nbsp; &nbsp; &nbsp; {{ contact.contact_name }}</span>
+							</div>
+							<div class="collapsible-body ">
+								<span>
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ contact.contact_name }}"
+											id="disabled" type="text"> <label class="custom-label">Contact</label>
+									</div>
+									<div class="input-field col s12 m6">
+											<input class="order-detail-input" disabled value="{{ contact.contact_no }}"
+												id="disabled" type="text"> <label class="custom-label">Contact No.</label>
+									</div>
+									<div class="input-field col s12 m6">
+											<input class="order-detail-input" disabled value="{{ contact.email }}"
+												id="disabled" type="text"> <label class="custom-label">E-mail</label>
+									</div>
+									<div class="input-field col s12 m6">
+											<input class="order-detail-input" disabled value="{{ contact.job_title }}"
+												id="disabled" type="text"> <label class="custom-label">Job Role</label>
+									</div>
+								</div>
+								</span>
+							</div>
+						</li>
+					
+					{% endfor %}
+				</ul>
+			</div>
+
+
+
+			<div>
+				<p class="account-rel-details">Billing Address</p>
+					<ul class="collapsible collapsible-accordion noshadow">
+					{% for data in billAddress %}
+					
+						<li>
+							<div class="collapsible-header account-rel-details-data"><i
+									style="margin: auto; margin-left: 2px; margin-right: 3px;"
+									class="material-icons">keyboard_arrow_down</i>
+								{{ data.state }}, {{ data.pin }}
+
+							</div>
+							<div class="collapsible-body">
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.address }}"
+											id="disabled" type="text"> <label class="custom-label">Address</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.city }}" id="disabled"
+											type="text"> <label class="custom-label">City</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.dist }}" id="disabled"
+											type="text"> <label class="custom-label">District</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.state }}"
+											id="disabled" type="text"> <label class="custom-label">State</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.pin }}" id="disabled"
+											type="text"> <label class="custom-label">Pin Code</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.gst }}" id="disabled"
+											type="text"> <label class="custom-label">GST</label>
+									</div>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+
+
+			<div>
+				<p class="account-rel-details">Shipping Address</p>
+				<ul class="collapsible collapsible-accordion noshadow">
+					{% for data in shipAddress %}
+						<li>
+							<div class="collapsible-header account-rel-details-data"><i
+									style="margin: auto; margin-left: 2px; margin-right: 3px;"
+									class="material-icons">keyboard_arrow_down</i>
+								{{ data.state }}, {{ data.pin }}
+
+							</div>
+							<div class="collapsible-body">
+								<div class="row">
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.address }}"
+											id="disabled" type="text"> <label class="custom-label">Address</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.city }}" id="disabled"
+											type="text"> <label class="custom-label">City</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.dist }}" id="disabled"
+											type="text"> <label class="custom-label">District</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.state }}"
+											id="disabled" type="text"> <label class="custom-label">State</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.pin }}" id="disabled"
+											type="text"> <label class="custom-label">Pin Code</label>
+									</div>
+									<div class="input-field col s12 m6">
+										<input class="order-detail-input" disabled value="{{ data.gst }}" id="disabled"
+											type="text"> <label class="custom-label">GST</label>
+									</div>
+								</div>
+							</div>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+
+
+			<div>
+				<p class="account-rel-details">Purchase Orders</p>
+				{% for items in orders %}
+				<div class="div-border account-rel-details-data">
+					<a style="color: rgba(41, 41, 41, 0.9);" href="/orders/{{ items.id }}/">
+					<i class="small material-icons"
+						style="font-size: 1.6rem; position: absolute; margin-top: -1px; margin-left: 4px;">keyboard_arrow_down</i> 
+					  &nbsp;  &nbsp;  &nbsp;&nbsp; Order No.: {{ items.order_no }}
+					
+				</a>
+				</div>
+				{% endfor %}
+			</div>
+
+		</div>
+	</div>
+</div>
+
+</div>
+
+{% endblock %}

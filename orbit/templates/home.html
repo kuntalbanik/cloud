@@ -1,0 +1,134 @@
+{% extends 'layout.html' %} {% block content %}
+
+
+{% load staticfiles %}
+<br>
+<script>
+    function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
+</script>
+
+{% if messages %}
+    {% for message in messages %}
+    <div id="myDIV" class="modal-form3">
+        <h5 class="bold">{{ message.tags }}</h5><br>
+        <p class="red-text center">{{ message|safe }}</p>
+        <div class="right">
+            <a href="#" class="waves-effect waves-light btn-small red white-text" onclick="myFunction()">Ok</a>
+        </div>
+    </div>
+
+{% endfor %}
+{% endif %}
+
+
+
+
+<div class="row" id="home-data">
+    <div class="col s12 m8">
+        <img src="{% static 'orbit/img/land_background.jpg' %}" alt="" class="responsive-img">
+        <p class="p-bold2 home-header-text">Pending Tasks</p>
+        <hr>
+        {% if order %}
+        <table class='striped highlight responsive-table table-hover-set'>
+            <thead>
+                <tr>
+                    <th>Order No</th>
+                    <th>Booking</th>
+                    <th>Advance</th>
+                    <th>Balance</th>
+                    <th>Delivery</th>
+                    <th>Commissioning</th>
+                    <th>Commission</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for orders in order reversed %}
+                {% if forloop.counter <= 5 %}
+                <tr>
+                    <td><a class="textUnderline" href="{% url 'orders_detail' orders.pk %}"> {{ orders.order_no }}</td>
+                    <td>{% if orders.order_booking_status.id == 1 %}
+                        <span class="red-text">{{ orders.order_booking_status }}</span>
+                        {% else %}
+                        <span>{{ orders.order_booking_status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if orders.advance_status.id == 1  %}
+                        <span class="red-text">{{ orders.advance_status }}</span>
+                        {% else %}
+                        <span>{{ orders.advance_status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if orders.balance_status.id == 1 %}
+                        <span class="red-text">{{ orders.balance_status }}</span>
+                        {% else %}
+                        <span>{{ orders.balance_status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if orders.delivery_status.id == 1 %}
+                        <span class="red-text">{{ orders.delivery_status }}</span>
+                        {% else %}
+                        <span>{{ orders.delivery_status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if orders.commissioning_status.id == 1 %}
+                        <span class="red-text">{{ orders.commissioning_status }}</span>
+                        {% else %}
+                        <span>{{ orders.commissioning_status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if orders.commission_status.id == 1 %}
+                        <span class="red-text">{{ orders.commission_status }}</span>
+                        {% else %}
+                        <span>{{ orders.commission_status }}</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+
+            </tbody>
+        </table>
+        <br>
+        <p class="right recent-actions-p2"><a href="{% url 'pending_tasks' %}">View All...</a></p>
+        {% else %}
+            <br><p class="center-align">No records found or you might not have permissions to access pending tasks.</p>
+        {% endif %}
+    </div>
+
+    <div class="col s12 m4">
+
+        <div class="box-border2">
+            <p class="p-bold2 home-header-text">Recent Actions</p>
+            <hr>
+            {% if data %}
+                {% for records in data reversed %}
+                {% if forloop.counter <= 6 %}
+                <div class="box-bottom-border">
+                    <p class="home-header-p-bold">{{records.action_type}}</p>
+                    <p class="recent-actions-p-time recent-actions-font">{{records.action_time}}</p>
+                    <p class="truncate recent-actions-p">{{records.content_type}} <span style="font-size: 16px;"> &#8680;
+                        </span> {{ records.object_data }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <p class="right"><a href="{% url 'actions' %}">View All...</a></p>
+            {% else %}
+                    <p class="center-align">No records found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ Title }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    {% load staticfiles %}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'orbit/css/materialize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'orbit/css/chosen.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'orbit/css/custom.css' %}">
+
+
+</head>
+
+<body class="bg-color">
+    
+
+    {% block content %}
+    {% endblock %}
+
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="{% static 'orbit/js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'orbit/js/materialize.min.js' %}"></script>
+    <script src="{% static 'orbit/js/chosen.jquery.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            $('input[id$="date"]').addClass('datepicker');
+            $('.sidenav').sidenav();
+            $(".dropdown-trigger").dropdown();
+            $('.scrollspy').scrollSpy();
+            $('.datepicker').datepicker({ format: "yyyy-mm-dd" });
+            $('.tabs').tabs();
+            $('input#input_text, textarea#textarea2').characterCounter();
+            // $('select').not('.disabled').formSelect();
+            $('select').addClass("browser-default");
+            $('select').addClass("chosen");
+            $("select").hide();
+            $(".chosen").chosen();
+            // $(".chosen").css("max-width","600px");
+            // $('select').formSelect();
+            // $('select').material_select();
+            //$('.modal1').modal();
+            $('.modal').modal({ dismissible: false, opacity: 0.7 });
+            $('.datepicker').datepicker({
+                container: 'body',
+                format: "yyyy-mm-dd",
+            });
+            $('.tooltipped').tooltip();
+        });
+    </script>
+</body>
+
+</html>

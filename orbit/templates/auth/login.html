@@ -1,0 +1,51 @@
+{% extends 'layout.html' %}
+{% block content %}
+
+{% load staticfiles %}
+<!-- Inner pages start -->
+
+<div class="login-page z-depth-1" onLoad="document.forms.login.username.click()">
+    <div class="row col s12">
+        <div>
+            <img class="img-center" src="{% static 'orbit/img/logo.svg' %}">
+            <br><br>
+            <h6 class="name-text">Orbit Cloud</h6>
+            <br>
+        </div>
+
+        <form name="login" method="post" autocomplete="off">
+            {% csrf_token %}
+            {% if warning %}
+            <p class="center-align red-text">{{ warning }}</p>
+            {% endif %}
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">person</i>
+                    <input id="username" name="username" type="email" class="validate" autofocus>
+                    <label for="username">User Name</label>
+                    <span class="helper-text" data-error="wrong" data-success="right"></span>
+
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <i class="material-icons prefix">lock</i>
+                            <input id="password" name="password" type="password" class="validate">
+                            <label for="password">Password</label>
+                        </div>
+                        <p class="center-align">Unable to login? <a href="#">Click Here</a></p>
+                        <div class="right">
+                            <div class="input-field col s12">
+                                <button
+                                    class="blue darken-1 waves-effect waves-light btn-large btn-custom">LOGIN</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Inner pages end -->
+
+{% endblock %}

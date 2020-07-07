@@ -1,0 +1,105 @@
+{% extends 'layout.html' %} {% block content %}
+
+
+<div class="below-nav">
+	<div class="row">
+
+		<div class="col s12 m1 center">
+			<i class="medium material-icons material-ico indigo-text darken-2">done_all</i>
+		</div>
+
+		<div class="col s12 m3 left">
+			<p class="p-top">Recents Actions</p>
+			<h6 class="h6-bold truncate">Currently Available &nbsp; 
+				<i
+					class="small material-icons indigo-text darken-2"
+					style="font-size: 1.8rem; position: absolute; margin-top: -2px;"> 
+					<a class="tooltipped" data-position="top" data-tooltip="Back to Home" class="" href="{% url 'home' %}">arrow_back</a></i>
+			
+			</h6>
+			<p class="p-bottom">
+				Total <span class="bold">{{ data.count }} </span> - Updated few moments ago 
+			</p>
+			
+		</div>
+		<div class="col s12 m6 offset-m1">
+			<div class="input-field">
+				<i class="material-icons prefix blue-text">search</i> <input
+					id="id_search" onkeyup="myFunction()" type="text"
+					autocomplete="off" placeholder="Search by Customer Name.." required>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal">
+		<div class="modal-content"></div>
+		
+
+	</div>
+	<!--  Modal Structure End -->
+
+	<div class="row table-margin">
+		<div class="col s12 m12">
+			<table class='striped highlight responsive-table table-hover-set'
+				id="data_table">
+				<thead>
+					<tr>
+						<th>Data Details</th>
+						<th>Content Type</th>
+						<th>Actions</th>
+						<th>Time</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for records in data reversed %}
+					<tr id="accounts">
+						<td>{{ records.object_data }}</td>
+						<td>{{ records.content_type }}</td>
+						<td>{{ records.action_type }}</td>
+						<td>{{ records.action_time }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		/* $(document).ready(function() {
+			$.ajax({
+				url : "/orders/create/",
+				success : function(data) {
+					//$('#modal1 .modal-content').html(data);
+					$('#modal1 .modal-content').html(data);
+				},
+				error : function(e) {
+					console.log(e)
+				}
+			});
+		}); */
+		
+		function myFunction() {
+	
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("id_search");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("data_table");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>	
+{% endblock %}

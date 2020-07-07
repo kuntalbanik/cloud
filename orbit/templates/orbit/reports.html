@@ -1,0 +1,239 @@
+{% extends 'layout.html' %} {% block content %}
+
+<div class="below-nav">
+	<!-- Inner pages start -->
+	<div class="row">
+		<div class="col s12 m1 center">
+			<i class="medium material-icons material-ico indigo-text darken-2">assignment</i>
+		</div>
+
+		<div class="col s12 m3 left">
+			<input type="hidden" name="order_id" value="">
+			<p class="p-top">-</p>
+			<h6 class="h6-bold truncate">Reports</h6>
+			<p class="p-bottom">As on last updates</p>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col s12 m2">
+			<ul class="table-of-contents">
+				<p>On Account</p>
+				<hr>
+				{% for account in orderAccount %}
+				<li class="textUnderline2"><a href="/reports/{{ account.pk }}">{{ account }}</a></li>
+				{% endfor %}
+				<br>
+				<p>Date Range</p>
+				<hr>
+				<li><a href="/reports/">Choose Range</a></li>
+				<form name="myForm" method="post" autocomplete="off" target="/reports/">
+					{% csrf_token %}
+					<li><input type="text" class="datepicker" name="date1" placeholder="Select max 6 months"></li>
+					<li><input type="text" class="datepicker" name="date2" placeholder="Select max 6 months"></li>
+					<li><button type="submit" class="waves-effect waves-green green lighten-3 btn-flat">Submit</button>
+					</li>
+				</form>
+			</ul>
+		</div>
+		<div class="col s12 m1"></div>
+		<!-- Report related data -->
+		<div class="col s12 m9 left">
+			{% if order %}
+
+			<table hidden class='responsive-table table-hide' id="data_table">
+
+				<tr>
+					<td>Order Account</td>
+					<td>Account Name</td>
+					<td>Contact Name</td>
+					<td>Contact No</td>
+					<td>Email</td>
+
+					<td>Address Type</td>
+					<td>Address</td>
+					<td>Dist</td>
+					<td>State</td>
+
+					<td>Address Type</td>
+					<td>Address</td>
+					<td>Dist</td>
+					<td>State</td>
+					<td>Order Type</td>
+					<td>Category</td>
+					<td>Order No</td>
+					<td>Order Date</td>
+					<td>Product</td>
+					<td>UOM</td>
+					<td>Qty</td>
+					<td>Amount</td>
+					<td>Tax</td>
+					<td>Division</td>
+					<td>Order Status</td>
+					<td>Order Booking Status</td>
+					<td>SO No</td>
+					<td>Payment Terms</td>
+					<td>Advance Amount</td>
+					<td>Advance Status</td>
+					<td>Balance Amount</td>
+					<td>Balance Status</td>
+					<td>Delivery Date</td>
+					<td>Supervision Scope</td>
+					<td>Transporter</td>
+					<td>Freight Terms</td>
+					<td>Local Purchase Req.</td>
+					<td>Local Purchase Date</td>
+					<td>DI Status</td>
+					<td>DI Date</td>
+					<td>Delivery Status</td>
+					<td>Commissioning Status</td>
+					<td>Commissioning Amount</td>
+					<td>Commission Status</td>
+					<td>Commission Amount</td>
+					<td>Sales Person</td>
+					<td>Remarks</td>
+				</tr>
+
+
+				{% for account in order %}
+				<tr id="accounts">
+					<td>{{ account.order_account }}</td>
+					<td>{{ account.account }}</td>
+					<td>{{ account.contact.contact_name }}</td>
+					<td>{{ account.contact.contact_no }}</td>
+					<td>{{ account.contact.email }}</td>
+					<td>{{ account.billing_address.address_type }}</td>
+					<td>{{ account.billing_address.address }}, 
+						{{ account.billing_address.city }}, 
+						{{ account.billing_address.pin }}, 
+						GST: {{ account.billing_address.gst }}
+					</td>
+					<td>{{ account.billing_address.dist }}</td>
+					<td>{{ account.billing_address.state }}</td>
+					
+					<td>{{ account.shipping_address.address_type }}</td>
+					<td>{{ account.shipping_address.address }}, 
+						{{ account.shipping_address.city }}, 
+						{{ account.shipping_address.pin }}, 
+						GST: {{ account.shipping_address.gst }} 
+					</td>
+					<td>{{ account.shipping_address.dist }}</td>
+					<td>{{ account.shipping_address.state }}</td>
+
+					<td>{{ account.order_type }}</td>
+					<td>{{ account.category }}</td>
+					<td>{{ account.order_no }}</td>
+					<td>{{ account.order_date|date:"d-M-Y" }}</td>
+					<td>{{ account.product_description }}</td>
+					<td>{{ account.uom }}</td>
+					<td>{{ account.qty }}</td>
+					<td>{{ account.amount }}</td>
+					<td>{{ account.tax }}</td>
+					<td>{{ account.division }}</td>
+					<td>{{ account.order_status }}</td>
+					<td>{{ account.order_booking_status }}</td>
+					<td>{{ account.so_no }}</td>
+					<td>{{ account.payment_terms }}</td>
+					<td>{{ account.advance_amount }}</td>
+					<td>{{ account.advance_status }}</td>
+					<td>{{ account.balance_amount }}</td>
+					<td>{{ account.balance_status }}</td>
+					<td>{{ account.delivery_date|date:"d-M-Y" }}</td>
+					<td>{{ account.supervision_scope }}</td>
+					<td>{{ account.transporter }}</td>
+					<td>{{ account.freight_terms }}</td>
+					<td>{{ account.local_purchase_required }}</td>
+					<td>{{ account.local_purchase_required_date|date:"d-M-Y" }}</td>
+					<td>{{ account.di_status }}</td>
+					<td>{{ account.di_date|date:"d-M-Y" }}</td>
+					<td>{{ account.delivery_status }}</td>
+					<td>{{ account.commissioning_status }}</td>
+					<td>{{ account.commissioning_amount }}</td>
+					<td>{{ account.commission_status }}</td>
+					<td>{{ account.commission_amount }}</td>
+					<td>{{ account.sales_person }}</td>
+					<td>{{ account.remarks }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+			{% endif %}
+			<!--  -->
+			<!-- Main Table -->
+			{% if order %}
+			<p style="margin-top: -35px;" class="right"><a class="textUnderline" id="export" href="#">Export</a> &nbsp; &nbsp; </p>
+			<table class='responsive-table' id="data_table">
+
+				<tr>
+					<td>Account Name</td>
+					<td>Order No</td>
+					<td>Order Date</td>
+				</tr>
+
+
+				{% for account in order %}
+				<tr id="accounts">
+					<td>{{ account.account }}</td>
+					<td>{{ account.order_no }}</td>
+					<td>{{ account.order_date|date:"d-M-Y" }}</td>
+				</tr>
+				{% endfor %}
+			</table>
+			{% else %}
+			<br>
+			<p class="center-align">No records found.</p>
+			{% endif %}
+
+
+		</div>
+	</div>
+</div>
+<!-- Inner pages end -->
+
+{% load staticfiles %}
+<script src="{% static 'orbit/js/jquery-3.3.1.min.js' %}"></script>
+<script>
+	/* $(document).ready(function() {
+		$.ajax({
+			url : "/orders/create/",
+			success : function(data) {
+				//$('#modal1 .modal-content').html(data);
+				$('#modal1 .modal-content').html(data);
+			},
+			error : function(e) {
+				console.log(e)
+			}
+		});
+	}); */
+
+	$("#export").click(function () {
+		$("#data_table").table2excel({
+			// exclude CSS class
+			exclude: ".noExl",
+			name: "Worksheet Name",
+			filename: "report", //do not include extension
+			fileext: ".xls" // file extension
+		});
+	});
+
+
+	function myFunction() {
+
+		var input, filter, table, tr, td, i, txtValue;
+		input = document.getElementById("id_search");
+		filter = input.value.toUpperCase();
+		table = document.getElementById("data_table");
+		tr = table.getElementsByTagName("tr");
+		for (i = 0; i < tr.length; i++) {
+			td = tr[i].getElementsByTagName("td")[0];
+			if (td) {
+				txtValue = td.textContent || td.innerText;
+				if (txtValue.toUpperCase().indexOf(filter) > -1) {
+					tr[i].style.display = "";
+				} else {
+					tr[i].style.display = "none";
+				}
+			}
+		}
+	}
+</script>
+{% endblock %}

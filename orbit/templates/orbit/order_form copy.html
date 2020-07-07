@@ -1,0 +1,227 @@
+{% extends 'layout2.html' %}
+
+{% block content %}
+
+<div class="row container modal-form">
+	<h5>Customer Purchase Order</h5>
+	<hr>
+	<div class="col s12 ">
+		<form name="myForm" method="post" autocomplete="off">
+			{% csrf_token %}
+			{% if form.account %}
+			<div class="form-row">
+				<span>
+					{{ form.account.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 2rem; position: absolute; margin-top: -4px;">
+						<a href="/account/create/" id="add_account">add_circle_outline</a></i>
+					{{ form.account }}
+				</span>
+			</div>
+			{% endif %}
+			{% if form.contact %}
+			<div class="form-row">
+				<span>
+					{{ form.contact.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 2rem; position: absolute; margin-top: -4px;">
+						<a href="/contact/create/" id="add_contact">add_circle_outline</a></i>
+					{{ form.contact }}
+				</span>
+			</div>
+			{% endif %}
+			{% if form.billing_address %}
+			<div class="form-row">
+				<span>{{ form.billing_address.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 2rem; position: absolute; margin-top: -4px;">
+						<a href="/billaddress/create/" id="add_billing_address">add_circle_outline</a></i>
+					{{ form.billing_address }}</span>
+			</div>
+			{% endif %}
+			{% if form.shipping_address %}
+			<div class="form-row">
+				<span>{{ form.shipping_address.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 2rem; position: absolute; margin-top: -4px;">
+						<a href="/shipaddress/create/" id="add_shipping_address">add_circle_outline</a></i>
+					{{ form.shipping_address }}
+				</span>
+			</div>
+			{% endif %}
+			<div class="form-row">
+				{{ form.order_type.label_tag }}
+				{{ form.order_type }}
+			</div>
+			<div class="form-row">
+				{{ form.category.label_tag }}
+				{{ form.category }}
+			</div>
+			<div class="form-row">
+				{{ form.order_no.label_tag }}
+				{{ form.order_no }}
+			</div>
+			<div class="form-row">
+				{{ form.order_date.label_tag }}
+				{{ form.order_date }}
+			</div>
+			<div class="form-row">
+				{{ form.product_description.label_tag }}
+				{{ form.product_description }}
+				{% if form.product_description.help_text %}
+				<span class="red-text lighten-4">{{ form.product_description.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.uom.label_tag }}
+				{{ form.uom }}
+			</div>
+			<div class="form-row">
+				{{ form.qty.label_tag }}
+				{{ form.qty }}
+			</div>
+			<div class="form-row">
+				{{ form.amount.label_tag }}
+				{{ form.amount }}
+			</div>
+			<div class="form-row">
+				{{ form.tax.label_tag }}
+				{{ form.tax }}
+			</div>
+			<div class="form-row">
+				{{ form.division.label_tag }}
+				{{ form.division }}
+			</div>
+			<div class="form-row">
+				{{ form.order_booking_status.label_tag }}
+				{{ form.order_booking_status }}
+			</div>
+			<div class="form-row">
+				{{ form.so_no.label_tag }}
+				{{ form.so_no }}
+				{% if form.so_no.help_text %}
+				<span class="red-text lighten-4">{{ form.so_no.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.payment_terms.label_tag }}
+				{{ form.payment_terms }}
+			</div>
+			<div class="form-row">
+				{{ form.advance_amount.label_tag }}
+				{{ form.advance_amount }}
+			</div>
+			<div class="form-row">
+				{{ form.advance_status.label_tag }}
+				{{ form.advance_status }}
+				{% if form.advance_status.help_text %}
+				<span class="red-text lighten-4">{{ form.advance_status.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.balance_amount.label_tag }}
+				{{ form.balance_amount }}
+			</div>
+			<div class="form-row">
+				{{ form.balance_status.label_tag }}
+				{{ form.balance_status }}
+				{% if form.balance_status.help_text %}
+				<span class="red-text lighten-4">{{ form.balance_status.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.delivery_date.label_tag }}
+				{{ form.delivery_date }}
+			</div>
+			<div class="form-row">
+				{{ form.supervision_scope.label_tag }}
+				{{ form.supervision_scope }}
+				{% if form.supervision_scope.help_text %}
+				<span class="red-text lighten-4">{{ form.supervision_scope.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.transporter.label_tag }}
+				{{ form.transporter }}
+			</div>
+			<div class="form-row">
+				{{ form.freight_terms.label_tag }}
+				{{ form.freight_terms }}
+			</div>
+			<div class="form-row">
+				{{ form.delivery_status.label_tag }}
+				{{ form.delivery_status }}
+			</div>
+			<div class="form-row">
+				{{ form.commissioning_status.label_tag }}
+				{{ form.commissioning_status }}
+			</div>
+			<div class="form-row">
+				{{ form.commissioning_amount.label_tag }}
+				{{ form.commissioning_amount }}
+				{% if form.commissioning_amount.help_text %}
+				<span class="red-text lighten-4">{{ form.commissioning_amount.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.commission_status.label_tag }}
+				{{ form.commission_status }}
+			</div>
+			<div class="form-row">
+				{{ form.commission_amount.label_tag }}
+				{{ form.commission_amount }}
+				{% if form.commission_amount.help_text %}
+				<span class="red-text lighten-4">{{ form.commission_amount.help_text|safe }}</span>
+				{% endif %}
+			</div>
+			<div class="form-row">
+				{{ form.remarks.label_tag }}
+				{{ form.remarks }}
+			</div>
+			<br>
+			<div class="right">
+				{% if object.id %}
+				<a class="waves-effect waves-green green lighten-3 btn-flat" href="/orders/{{ object.id }}/">Cancel</a>
+				{% else %}
+				<a class="waves-effect waves-green green lighten-3 btn-flat" href="/orders/">Cancel</a>
+				{% endif %}
+				<button type="submit" class="waves-effect waves-green green lighten-3 btn-flat">Submit</button>
+			</div>
+		</form>
+	</div>
+</div>
+
+{% block script %}
+
+<script type="text/javascript">
+
+	// Add this line on a tag 
+	// onclick="return showAddPopup(this);"
+	function showEditPopup(url) {
+		var win = window.open(url, "Edit",
+			'height=650,width=800,resizable=yes,scrollbars=yes');
+		return false;
+	}
+	function showAddPopup(triggeringLink) {
+		var name = triggeringLink.id.replace(/^add_/, '');
+		href = triggeringLink.href;
+		var win = window.open(href, name, 'height=650,width=800,resizable=yes,scrollbars=yes');
+		win.focus();
+		return false;
+	}
+	function closePopup(win, newID, newRepr, id) {
+		$(id).append('<option value=' + newID + ' selected >' + newRepr + '</option>')
+		win.close();
+	}
+
+</script>
+{% endblock %}
+
+<script>
+	function goBack() {
+		window.history.back();
+	}
+
+</script>
+
+{% endblock %}

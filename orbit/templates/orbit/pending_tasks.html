@@ -1,0 +1,155 @@
+{% extends 'layout.html' %} {% block content %}
+
+
+<div class="below-nav">
+	<div class="row">
+
+		<div class="col s12 m1 center">
+			<i class="medium material-icons material-ico indigo-text darken-2">update</i>
+		</div>
+
+		<div class="col s12 m3 left">
+			<p class="p-top">Pending Tasks</p>
+			<h6 class="h6-bold truncate">Currently Available &nbsp;
+				<i class="small material-icons indigo-text darken-2"
+					style="font-size: 1.8rem; position: absolute; margin-top: -2px;">
+					<a class="tooltipped" data-position="top" data-tooltip="Back to Home" class=""
+						href="{% url 'home' %}">arrow_back</a></i>
+
+			</h6>
+			<p class="p-bottom">
+				Total <span class="bold">{{ order.count }} </span> - Updated few moments ago
+			</p>
+
+		</div>
+		<div class="col s12 m6 offset-m1">
+			<div class="input-field">
+				<i class="material-icons prefix blue-text">search</i> <input id="id_search" onkeyup="myFunction()"
+					type="text" autocomplete="off" placeholder="Search by Customer Name.." required>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- Modal Structure -->
+	<div id="modal1" class="modal">
+		<div class="modal-content"></div>
+
+
+	</div>
+	<!--  Modal Structure End -->
+
+	<div class="row table-margin">
+		<div class="col s12 m12">
+			<table class='striped highlight responsive-table table-hover-set' id="data_table">
+				<thead>
+					<tr>
+						<th>Order</th>
+						<!-- <th>Order Date</th> -->
+						<th>Division<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Booking<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Local Order Date<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Advance<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Balance<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Delivery<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Commissioning<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+						<th>Commission<i class="material-icons" style="position: absolute; margin-top: -3px;">arrow_drop_down</i></th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{% for orders in order reversed %}
+					{% if forloop.counter <= 5 %}
+					<tr>
+						<td><a class="textUnderline" href="{% url 'orders_detail' orders.pk %}"> {{ orders.order_no }}</td>
+						<!-- <td>{{ orders.order_date }}</td> -->
+						<td>{{ orders.division }}</td>
+						<td>{% if orders.order_booking_status.id == 1 %}
+							<span class="red-text">{{ orders.order_booking_status }}</span>
+							{% else %}
+							<span>{{ orders.order_booking_status }}</span>
+							{% endif %}
+						</td>
+						<td>{% if orders.local_purchase_required.id == 1 %}
+							<span class="red-text">{{ orders.local_purchase_required_date }}</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if orders.advance_status.id == 1  %}
+							<span class="red-text">{{ orders.advance_status }}</span>
+							{% else %}
+							<span>{{ orders.advance_status }}</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if orders.balance_status.id == 1 %}
+							<span class="red-text">{{ orders.balance_status }}</span>
+							{% else %}
+							<span>{{ orders.balance_status }}</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if orders.delivery_status.id == 1 %}
+							<span class="red-text">{{ orders.delivery_status }}</span>
+							{% else %}
+							<span>{{ orders.delivery_status }}</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if orders.commissioning_status.id == 1 %}
+							<span class="red-text">{{ orders.commissioning_status }}</span>
+							{% else %}
+							<span>{{ orders.commissioning_status }}</span>
+							{% endif %}
+						</td>
+						<td>
+							{% if orders.commission_status.id == 1 %}
+							<span class="red-text">{{ orders.commission_status }}</span>
+							{% else %}
+							<span>{{ orders.commission_status }}</span>
+							{% endif %}
+						</td>
+					</tr>
+					{% endif %}
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<script>
+		/* $(document).ready(function() {
+			$.ajax({
+				url : "/orders/create/",
+				success : function(data) {
+					//$('#modal1 .modal-content').html(data);
+					$('#modal1 .modal-content').html(data);
+				},
+				error : function(e) {
+					console.log(e)
+				}
+			});
+		}); */
+
+		function myFunction() {
+
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("id_search");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("data_table");
+			tr = table.getElementsByTagName("tr");
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[1];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
+	{% endblock %}

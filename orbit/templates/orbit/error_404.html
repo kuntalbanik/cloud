@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ Title }}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+	{% load staticfiles %}
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" type="text/css" href="{% static 'orbit/css/materialize.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'orbit/css/custom.css' %}">
+	
+	<!-- Java Script -->
+        <script>
+            function loadPage() {
+                document.getElementById("page-content").style.display = "block";
+                document.getElementById("loader").style.display = "none";
+                document.getElementById("loader-row").style.display = "none";
+
+            }
+            function spinFunc() {
+                setTimeout(loadPage, 0);
+            }
+            
+        </script>
+</head>
+
+<body onload="spinFunc()">
+
+
+        <!-- Progress bar -->
+        <div class="row" id="loader-row">
+            <div class="col s3 m5"></div>
+            <div class="col s3 m2">
+                <div class="progress" id="loader">
+                    <div class="indeterminate"></div>
+                </div></div>
+            <div class="col s4 m5"></div>
+        </div>
+
+
+
+
+
+        <!-- Load body content -->
+        <div id="page-content" style="display: none;">
+
+            {% if user.is_authenticated %}
+            <!-- Nav bar start -->
+            <nav class="nav-wrapper blue darken-2">
+                <div class="nav-wrapper">
+                    <a class="brand-logo">ORBIT</a>
+                    <a href="#" class="sidenav-trigger" data-target="mobile-nav">
+                        <i class="material-icons">menu</i>
+                    </a>
+
+                    <!--Nav dropdown-->
+                    <ul id="dropdown2" class="dropdown-content dropdown-content2 custom-dropdown-content">
+                        <li><a href="{% url 'orders_list' %}">Customer</a></li>
+                        <!-- <li><a href="#!">Vendor</a></li>
+                        <li><a href="#!">Supplier</a></li> -->
+                    </ul>
+                    <ul id="dropdown4" class="dropdown-content dropdown-content2 custom-dropdown-content">
+                                <li><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                    <!--Nav dropdown end-->
+
+                    <!-- sidebar dropdown-->
+                    <ul id="dropdown6" class="dropdown-content">
+                        <li class="sidenav-close"><a href="{% url 'orders_list' %}">Customer</a></li>
+                        <!-- <li class="sidenav-close"><a href="#!">Vendor</a></li>
+                        <li class="sidenav-close"><a href="#!">Supplier</a></li> -->
+                    </ul>
+                    <ul id="dropdown8" class="dropdown-content">
+                        <li class="sidenav-close"><a href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+
+
+
+
+                    <ul class="dropdown-content2 right hide-on-med-and-down ">
+                        <li>
+                            <form name="myForm" action="{% url 'search' %}" method="post" autocomplete="off">
+                                    {% csrf_token %}
+                                <div class="input-field">
+                                    <input id="search" name="search" type="search" required autocomplete="off">
+                                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                    <!--<i class="material-icons">close</i>-->
+                                </div>
+                                
+                            </form>
+                        </li>
+                        <li><a href="{% url 'home' %}" >Home</a></li>
+                        <li><a href="{% url 'account_list' %}" >Accounts</a></li>
+                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">Orders</a></li>
+                        <li><a href="#" >Reports</a></li>
+                        <li>
+                            <a href="#" class="dropdown-trigger bold" data-target="dropdown4">
+                               {{ user.username }}
+                            </a>
+                        </li>
+                        <li>&nbsp;</li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Mobile Side bar -->
+            <ul class="sidenav" id="mobile-nav">
+                <li><div class="user-view">
+                        <div class="background">
+                            <img alt="backgroung Img" src="{% static 'orbit/img/office.jpg' %}">
+                        </div>
+                        <a href="#user"><img class="circle" alt="Profile Image" src="{% static 'orbit/img/user.png' %}"></a>
+                        <span class="white-text name">
+                                {{ user.username }}
+                            </span>
+                        <span class="white-text email">
+                                {{ user.email }}
+                            </span>
+                    </div>
+                </li>
+                <li class="sidenav-close"><a href="{% url 'home' %}" >Home</a></li>
+                <li class="sidenav-close"><a href="{% url 'account_list' %}">Accounts</a></li>
+                <li><a class="dropdown-trigger" href="#!" data-target="dropdown6">Orders</a></li>
+                <li class="sidenav-close"><a href="#" >Reports</a></li>
+                <li><a href="#" class="dropdown-trigger" data-target="dropdown8">
+                        {{ user.email }}
+                    </a>
+                </li>
+
+            </ul>
+            {% endif %}
+			<!-- Mobile Side bar end -->
+
+            <!-- Modal Trigger -->
+			<!-- Nav bar end -->
+
+            <!-- Inner pages start -->
+			
+                    {% block content %}
+                    
+                    <h1 class="center-text">ERROR 404</h1>
+
+					{% endblock %}
+
+			</div>
+	
+	
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="{% static 'orbit/js/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'orbit/js/materialize.min.js' %}"></script>
+        <script>
+            $(document).ready(function() {
+            	$('input[id$="date"]').addClass('datepicker');
+                $('.sidenav').sidenav();
+                $(".dropdown-trigger").dropdown();
+                $('.scrollspy').scrollSpy();
+                $('.datepicker').datepicker({format: "yyyy-mm-dd"});
+                $('.tabs').tabs();
+                $('input#input_text, textarea#textarea2').characterCounter();
+                $('select').formSelect();
+                //$('.modal1').modal();
+                $('.modal').modal({opacity: 0.8});
+                $('.datepicker').datepicker({
+                    container: 'body',
+                    format: "yyyy-mm-dd",
+                  });
+                $('.tooltipped').tooltip();
+                $('.collapsible').collapsible();
+                // $('.modal').modal('open');
+                // $('#modal1').openModal();
+            });
+        </script>
+</body>
+</html>

@@ -1,0 +1,230 @@
+{% extends 'layout2.html' %}
+
+{% block content %}
+<body>
+<div class="row container modal-form">
+	<h5>Customer Purchase Order</h5>
+	<hr>
+	<div class="col s12 ">
+		<form name="myForm" method="post" autocomplete="off">
+			{% csrf_token %}
+			{% if form.order_account %}
+			<div class="form-row">
+				<span><span class="red-text">*</span>{{ form.order_account.label_tag }} 
+					{{form.order_account}}
+				</span>
+			</div>
+			{% endif %}
+			{% if form.account %}
+			<div class="form-row">
+				<span>
+					<span class="red-text">*</span>{{ form.account.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 1.7rem; position: absolute; margin-top: -1px;">
+						<a href="/account/create/" id="add_account">add_circle_outline</a></i>
+					{{form.account}}
+				</span>
+			</div>
+			{% endif %}
+			{% if form.contact %}
+			<div class="form-row">
+				<span>
+					<span class="red-text">*</span>{{ form.contact.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 1.7rem; position: absolute; margin-top: -1px;">
+						<a href="/contact/create/" id="add_contact">add_circle_outline</a></i>
+					{{ form.contact }}
+				</span>
+			</div>
+			{% endif %}
+			{% if form.billing_address %}
+			<div class="form-row">
+				<span><span class="red-text">*</span>{{ form.billing_address.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 1.7rem; position: absolute; margin-top: -1px;">
+						<a href="/billaddress/create/" id="add_billing_address">add_circle_outline</a></i>
+					{{ form.billing_address }}</span>
+			</div>
+			{% endif %}
+			{% if form.shipping_address %}
+			<div class="form-row">
+				<span><span class="red-text">*</span>{{ form.shipping_address.label_tag }} &nbsp;
+					<i class="small material-icons indigo-text darken-2"
+						style="font-size: 1.7rem; position: absolute; margin-top: -1px;">
+						<a href="/shipaddress/create/" id="add_shipping_address">add_circle_outline</a></i>
+					{{ form.shipping_address }}
+				</span>
+			</div>
+			{% endif %}
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.order_status.label_tag }}
+					{{ form.order_status }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.order_type.label_tag }}
+				{{ form.order_type }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.category.label_tag }}
+				{{ form.category }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.order_no.label_tag }}
+				{{ form.order_no }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.order_date.label_tag }}
+				{{ form.order_date }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.product_description.label_tag }}
+				<span class="order-help-text">[ Enter brief description about product ]</span>
+				{{ form.product_description }}
+				<!-- {% if form.product_description.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.product_description.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.uom.label_tag }}
+				{{ form.uom }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.qty.label_tag }}
+				{{ form.qty }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.amount.label_tag }}
+				{{ form.amount }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.tax.label_tag }}
+				{{ form.tax }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.division.label_tag }}
+				{{ form.division }}
+			</div>
+			
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.order_booking_status.label_tag }}
+				{{ form.order_booking_status }}
+			</div>
+			<div class="form-row">
+				{{ form.so_no.label_tag }} <span class="order-help-text">[ SO Number from Principal Company ]</span>
+				{{ form.so_no }}
+				<!-- {% if form.so_no.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.so_no.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.payment_terms.label_tag }}
+				{{ form.payment_terms }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.advance_amount.label_tag }}
+				{{ form.advance_amount }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.advance_status.label_tag }}
+				<span class="order-help-text">[ ABG / Advance Recived? ]</span>
+				{{ form.advance_status }}
+				<!-- {% if form.advance_status.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.advance_status.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.balance_amount.label_tag }}
+				{{ form.balance_amount }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.balance_status.label_tag }}
+				<span class="order-help-text">[ PBG / Balance Received? ]</span>
+				{{ form.balance_status }}
+				<!-- {% if form.balance_status.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.balance_status.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.delivery_date.label_tag }}
+				{{ form.delivery_date }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.supervision_scope.label_tag }}
+				<span class="order-help-text">[ Supervision / E&C Scope ]</span>
+				{{ form.supervision_scope }}
+				<!-- {% if form.supervision_scope.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.supervision_scope.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				{{ form.transporter.label_tag }}
+				{{ form.transporter }}
+			</div>
+			<div class="form-row">
+				{{ form.freight_terms.label_tag }}
+				{{ form.freight_terms }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.local_purchase_required.label_tag }}
+				{{ form.local_purchase_required }}
+			</div>
+			<div class="form-row">
+				{{ form.local_purchase_required_date.label_tag }}
+				{{ form.local_purchase_required_date }}
+			</div><div class="form-row">
+				{{ form.di_status.label_tag }}
+				{{ form.di_status }}
+			</div>
+			<div class="form-row">
+				{{ form.di_date.label_tag }}
+				{{ form.di_date }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.delivery_status.label_tag }}
+				{{ form.delivery_status }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.commissioning_status.label_tag }}
+				{{ form.commissioning_status }}
+			</div>
+			<div class="form-row">
+				{{ form.commissioning_amount.label_tag }}
+				<span class="order-help-text">[ Pending payments for site commissioning ]</span>
+				{{ form.commissioning_amount }}
+				<!-- {% if form.commissioning_amount.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.commissioning_amount.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.commission_status.label_tag }}
+				{{ form.commission_status }}
+			</div>
+			<div class="form-row">
+				{{ form.commission_amount.label_tag }}
+				<span class="order-help-text">[ Commision pending from Principal Company ]</span>
+				{{ form.commission_amount }}
+				<!-- {% if form.commission_amount.help_text %}
+				<span class="red-text lighten-4 form-help_text">{{ form.commission_amount.help_text|safe }}</span>
+				{% endif %} -->
+			</div>
+			<div class="form-row">
+				{{ form.sales_person.label_tag }}
+				{{ form.sales_person }}
+			</div>
+			<div class="form-row">
+				<span class="red-text">*</span>{{ form.remarks.label_tag }}
+				{{ form.remarks }}
+			</div>
+			<div class="right">
+				{% if object.id %}
+				<a class="waves-effect waves-green green lighten-3 btn-flat" href="/orders/{{ object.id }}/">Cancel</a>
+				{% else %}
+				<a class="waves-effect waves-green green lighten-3 btn-flat" href="/orders/">Cancel</a>
+				{% endif %}
+				<button type="submit" class="waves-effect waves-green green lighten-3 btn-flat">Submit</button>
+			</div>
+		</form>
+	</div>
+</div>
+</body>
+{% endblock %}

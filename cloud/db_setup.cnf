@@ -1,0 +1,6 @@
+[client]
+database = cloud
+user = 'kuntal@localhost'
+password = 'redhat'
+'HOST': 'localhost'
+default-character-set = utf8

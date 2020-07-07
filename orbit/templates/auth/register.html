@@ -1,0 +1,37 @@
+{% extends 'layout.html' %} {% block content %}
+
+{% if user.is_authenticated %}
+	<h4>You are logged in. <a href="/">Click here</a> for home page </h4>
+
+{% else %}
+
+<form class="form-horizontal" role="form" method="post">
+	<!-- Function of '{% csrf_token %}' The person who is sending data using this form only -->
+	{% csrf_token %}
+	<div class="form-group">
+		<label for="username" class="col-sm-2 control-label">Username</label>
+		<div class="col-sm-8">
+			<input type="text" class="form-control" id="username" name="username" placeholder="Username">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="email" class="col-sm-2 control-label">Email</label>
+		<div class="col-sm-8">
+			<input type="email" class="form-control" id="email" name="email" placeholder="Email">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="password" class="col-sm-2 control-label">Password</label>
+		<div class="col-sm-8">
+			<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-8">
+			<button type="submit" class="btn btn-default">Register</button>
+		</div>
+	</div>
+
+</form>
+{% endif %}
+{% endblock %}
