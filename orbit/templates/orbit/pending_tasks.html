@@ -60,7 +60,6 @@
 
 				<tbody>
 					{% for orders in order reversed %}
-					{% if forloop.counter <= 5 %}
 					<tr>
 						<td><a class="textUnderline" href="{% url 'orders_detail' orders.pk %}"> {{ orders.order_no }}</td>
 						<!-- <td>{{ orders.order_date }}</td> -->
@@ -111,7 +110,6 @@
 							{% endif %}
 						</td>
 					</tr>
-					{% endif %}
 					{% endfor %}
 				</tbody>
 			</table>
